@@ -22,20 +22,22 @@ public class MainActivity extends AppCompatActivity {
             layout.setOnTouchListener(new SwipeDirectionListener() {
 
                 TextView tv = findViewById(R.id.tv);
-                int humeur = 3;
+                int mood = 3;
+
+
 
 
                 public void onUpSwipe(float value) {
-                    if (humeur < 4) {
-                        humeur++;
+                    if (mood < 4) {
+                        mood++;
                     }
-                    tv.setText("UpSwipe " + humeur);
+                    tv.setText("UpSwipe " + mood);
                 }
 
                 public void onDownSwipe(float value) {
-                    tv.setText("DownSwipe " + humeur);
-                    if (humeur > 0) {
-                        humeur--;
+                    tv.setText("DownSwipe " + mood);
+                    if (mood > 0) {
+                        mood--;
                     }
                 }
             });
