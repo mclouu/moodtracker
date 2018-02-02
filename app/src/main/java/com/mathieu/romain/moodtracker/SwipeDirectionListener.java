@@ -1,5 +1,7 @@
 package com.mathieu.romain.moodtracker;
 
+import android.content.Context;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -9,82 +11,51 @@ import android.view.View;
 
 public class SwipeDirectionListener implements View.OnTouchListener {
 
-    float deltaY;
-    float maxValY;
-    float firstTouchY;
-    float currentY;
-    float SWIPE_THRESHOLD = 80;
+    private final GestureDetector gestureDetector;
 
+    public SwipeDirectionListener(Context ctx) {
+        gestureDetector = new GestureDetector(ctx, new GestureListener());
+    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        boolean result;
+        return gestureDetector.onTouchEvent(event);
+    }
 
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+    private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
-                //Register the first touch on TouchDown and this should not change unless finger goes up.
-                firstTouchY = event.getY();
-                maxValY = 0.0f;
+        private static final int SWIPE_THRESHOLD = 10;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
-                //As the event is consumed, return true
-                result = true;
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-
-                //CurrentX/Y are the continues changing values of one single touch session. Change
-                //when finger slides on view
-                currentY = event.getY();
-
-                //setting the maximum value of X or Y so far. Any deviation in this means a  change of direction so reset the firstTouch value to last known max value i.e MaxVal X/Y.
-                if (maxValY < currentY) {
-                    maxValY = currentY;
-                } else {
-                    firstTouchY = maxValY;
-                    maxValY = 0.0f;
-                }
-
-                //DeltaX/Y are the difference between current touch and the value when finger first touched screen.
-                //If its negative that means current value is on down side of first touchdown value i.e Going down
-                deltaY = currentY - firstTouchY;
-
-                //vertical swipe
-
-                if (Math.abs(deltaY) > SWIPE_THRESHOLD) {
-                    if (deltaY > 0) {
-                        // swipe down
-                        onDownSwipe(Math.abs(deltaY));
-                    } else {
-                        //swipe up
-                        onUpSwipe(Math.abs(deltaY));
-                    }
-                }
-                result = true;
-                break;
-
-            case MotionEvent.ACTION_UP:
-                //Clean UP
-                firstTouchY = 0.0f;
-                result = true;
-                break;
-
-            default:
-                result = false;
-                break;
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
         }
 
-        return result;
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            boolean result = false;
+            try {
+                float diffY = e2.getY() - e1.getY();
+                if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (diffY > 0) {
+                        onDownSwipe();
+                    } else {
+                        onUpSwipe();
+                    }
+                    result = true;
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            return result;
+        }
     }
 
 
-    //CONSTRUCTOR
-
-    public void onUpSwipe(float value) {
-
+    public void onUpSwipe() {
     }
 
-    public void onDownSwipe(float value) {
-
+    public void onDownSwipe() {
     }
 }
