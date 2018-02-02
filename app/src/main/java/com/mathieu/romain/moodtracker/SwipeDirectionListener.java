@@ -13,7 +13,8 @@ public class SwipeDirectionListener implements View.OnTouchListener {
     float maxValY;
     float firstTouchY;
     float currentY;
-    float SWIPE_THRESHOLD = 10.0f;
+    float SWIPE_THRESHOLD = 80;
+
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -49,13 +50,14 @@ public class SwipeDirectionListener implements View.OnTouchListener {
                 deltaY = currentY - firstTouchY;
 
                 //vertical swipe
+
                 if (Math.abs(deltaY) > SWIPE_THRESHOLD) {
                     if (deltaY > 0) {
                         // swipe down
-                        onDownSwipe(currentY);
+                        onDownSwipe(Math.abs(deltaY));
                     } else {
                         //swipe up
-                        onUpSwipe(currentY);
+                        onUpSwipe(Math.abs(deltaY));
                     }
                 }
                 result = true;
@@ -76,7 +78,7 @@ public class SwipeDirectionListener implements View.OnTouchListener {
     }
 
 
-    //CONSTRUCTEUR
+    //CONSTRUCTOR
 
     public void onUpSwipe(float value) {
 
