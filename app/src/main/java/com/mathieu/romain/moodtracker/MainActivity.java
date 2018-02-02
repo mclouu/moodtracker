@@ -3,6 +3,7 @@ package com.mathieu.romain.moodtracker;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -10,59 +11,49 @@ public class MainActivity extends AppCompatActivity {
     int mood = 3;
     ImageView imgSmiley;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        imgSmiley = findViewById(R.id.img_smiley);
         swipe();
 
-        imgSmiley = findViewById(R.id.img_smiley);
-        switch (mood) {
-            case 0:
-                imgSmiley.setImageResource(R.drawable.smileysad);
-                break;
-            case 1:
-                imgSmiley.setImageResource(R.drawable.smileydisappointed);
-                break;
-            case 2:
-                imgSmiley.setImageResource(R.drawable.smileynormal);
-                break;
-            case 3:
-                imgSmiley.setImageResource(R.drawable.smileyhappy);
-                break;
-            case 4:
-                imgSmiley.setImageResource(R.drawable.smileysuperhappy);
-                break;
-            default:
-                imgSmiley.setImageResource(R.drawable.smileyhappy);
-                break;
-        }
+
     }
 
     public void swipe() {
-        // RelativeLayout layout = findViewById(R.id.main_activity_layout);
-        ImageView imgSmiley = findViewById(R.id.img_smiley);
+        RelativeLayout layout = findViewById(R.id.main_activity_layout);
 
-        imgSmiley.setOnTouchListener(new SwipeDirectionListener() {
 
+        layout.setOnTouchListener(new SwipeDirectionListener(MainActivity.this) {
+            ImageView imgSmiley = findViewById(R.id.img_smiley);
             TextView tv = findViewById(R.id.tv);
 
+            int tableauImg[] = {R.drawable.smileysad, R.drawable.smileydisappointed, R.drawable.smileynormal, R.drawable.smileyhappy, R.drawable.smileysuperhappy};
 
-            public void onUpSwipe(float value) {
-                if (mood < 4) {
+
+            public void onUpSwipe() {
+                if (mood != 4) {
                     mood++;
                 }
-                tv.setText("UpSwipe " + mood + " - " + value);
+                imgSmiley.setImageResource(tableauImg[mood]);
+                tv.setText("UpSwipe " + mood);
+
             }
 
-            public void onDownSwipe(float value) {
-                tv.setText("DownSwipe " + mood + " - " + value);
-                if (mood > 0) {
+            public void onDownSwipe() {
+                if (mood != 0) {
                     mood--;
                 }
+                imgSmiley.setImageResource(tableauImg[mood]);
+                tv.setText("DownSwipe " + mood);
+
             }
+
         });
+
     }
 }
 
