@@ -1,7 +1,11 @@
 package com.mathieu.romain.moodtracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -10,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     int mood = 3;
     ImageView imgSmiley;
+    ImageButton btnHistory;
 
 
     @Override
@@ -19,6 +24,16 @@ public class MainActivity extends AppCompatActivity {
 
         imgSmiley = findViewById(R.id.img_smiley);
         swipe();
+
+
+        btnHistory = findViewById(R.id.btn_history);
+        btnHistory.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this, HistoryActivity.class);
+                startActivity(myIntent);
+            }
+        });
 
 
     }
@@ -33,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             TextView tv = findViewById(R.id.tv);
 
             int tableauImg[] = {R.drawable.smileysad, R.drawable.smileydisappointed, R.drawable.smileynormal, R.drawable.smileyhappy, R.drawable.smileysuperhappy};
-            int tableauBackground[] = {R.color.Background_sad,R.color.Background_disappointed,R.color.Background_normal,R.color.Background_happy,R.color.Background_superhappy};
+            int tableauBackground[] = {R.color.Background_sad, R.color.Background_disappointed, R.color.Background_normal, R.color.Background_happy, R.color.Background_superhappy};
 
             public void onUpSwipe() {
                 if (mood != 4) {
