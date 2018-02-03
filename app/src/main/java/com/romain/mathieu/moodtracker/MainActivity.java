@@ -1,4 +1,4 @@
-package com.mathieu.romain.moodtracker;
+package com.romain.mathieu.moodtracker;
 
 import android.content.Intent;
 import android.os.Bundle;

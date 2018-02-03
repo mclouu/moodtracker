@@ -1,4 +1,4 @@
-package com.mathieu.romain.moodtracker;
+package com.romain.mathieu.moodtracker;
 
 import android.content.Context;
 import android.view.GestureDetector;

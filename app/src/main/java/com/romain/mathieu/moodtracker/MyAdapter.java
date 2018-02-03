@@ -1,4 +1,4 @@
-package com.mathieu.romain.moodtracker;
+package com.romain.mathieu.moodtracker;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
