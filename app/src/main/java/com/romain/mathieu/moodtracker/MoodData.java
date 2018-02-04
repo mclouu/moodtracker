@@ -8,17 +8,18 @@ public class MoodData {
     String time;
     String message;
     //int messageIcons;
-    //int sizeCard;
+    int sizeCard;
     int colorCard;
 
 
-    public MoodData(String time, String message, int colorCard) {
+    public MoodData(String time, String message, int colorCard, int sizeCard) {
         this.time = time;
         this.message = message;
         this.colorCard = colorCard;
+        this.sizeCard = sizeCard;
 
         // this.messageIcons = messageIcons;
-        // this.sizeCard = sizeCard;
+
 
     }
 }

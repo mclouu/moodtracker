@@ -44,6 +44,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
         int color = holder.cardView.getContext().getResources().getColor(colorId);
         holder.cardView.setCardBackgroundColor(color);
 
+        holder.cardView.getLayoutParams().width = mdatas.get(position).sizeCard;
+        holder.cardView.requestLayout();
+
 
     }
 
