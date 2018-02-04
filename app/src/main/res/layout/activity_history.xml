@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.romain.romain.moodtracker.HistoryActivity"
-    android:background="#CACACA">
+    tools:context="com.romain.mathieu.moodtracker.HistoryActivity"
+    android:background="#949494">
 
 
     <android.support.v7.widget.RecyclerView
