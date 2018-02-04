@@ -40,11 +40,11 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void initializeData() {
         moodData = new ArrayList<>();
-        moodData.add(new MoodData("Hier", "trop bon la pizza", R.color.color_superhappy));
-        moodData.add(new MoodData("Avant-hier", "trop bon la pizza", R.color.color_superhappy));
-        moodData.add(new MoodData("Il y a un jours", "trop bon la pizza", R.color.color_superhappy));
-        moodData.add(new MoodData("Il y a deux jours", "trop bon la pizza", R.color.color_superhappy));
-        moodData.add(new MoodData("Il y a trois jours", "trop bon la pizza", R.color.color_superhappy));
+        moodData.add(new MoodData("TDB", "trop bon la pizza", R.color.color_superhappy));
+        moodData.add(new MoodData("Avant-hier", "trop bon la pizza", R.color.color_happy));
+        moodData.add(new MoodData("Il y a un jours", "trop bon la pizza", R.color.color_disappointed));
+        moodData.add(new MoodData("Il y a deux jours", "trop bon la pizza", R.color.color_normal));
+        moodData.add(new MoodData("Il y a trois jours", "trop bon la pizza", R.color.color_sad));
         moodData.add(new MoodData("Il y a quatre jours", "trop bon la pizza", R.color.color_superhappy));
         moodData.add(new MoodData("Il y a cinq jours", "trop bon la pizza", R.color.color_superhappy));
         moodData.add(new MoodData("Il y a six jours", "trop bon la pizza", R.color.color_superhappy));

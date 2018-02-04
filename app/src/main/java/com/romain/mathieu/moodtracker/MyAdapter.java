@@ -1,6 +1,7 @@
 package com.romain.mathieu.moodtracker;
 
 
+import android.support.annotation.ColorInt;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,6 +22,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
 
     public List<MoodData> mdatas;
 
+
+
     public MyAdapter(List<MoodData> datas){
         this.mdatas = datas;
     }
@@ -37,6 +40,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
         holder.textViewTime.setText(mdatas.get(position).time);
 
+        int colorId = mdatas.get(position).colorCard;
+        int color = holder.cardView.getContext().getResources().getColor(colorId);
+        holder.cardView.setCardBackgroundColor(color);
+
+
     }
 
     @Override
@@ -49,21 +57,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
         CardView cardView;
         TextView textViewTime;
         ImageButton messageIcons;
-        String message;
+
+
 
         public HistoryViewHolder(final View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardview);
+
             textViewTime = itemView.findViewById(R.id.textview_time);
             messageIcons = itemView.findViewById(R.id.message_icons);
 
             messageIcons.setClickable(true);
-            message = "j'aime l'argent";
+
+
             messageIcons.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(itemView.getContext(),message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(itemView.getContext(),"j'aime le vin", Toast.LENGTH_SHORT).show();
 
                 }
             });
