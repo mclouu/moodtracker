@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             TextView tv = findViewById(R.id.tv);
 
             int tableauImg[] = {R.drawable.smileysad, R.drawable.smileydisappointed, R.drawable.smileynormal, R.drawable.smileyhappy, R.drawable.smileysuperhappy};
-            int tableauBackground[] = {R.color.Background_sad, R.color.Background_disappointed, R.color.Background_normal, R.color.Background_happy, R.color.Background_superhappy};
+            int tableauBackground[] = {R.color.color_sad, R.color.color_disappointed, R.color.color_normal, R.color.color_happy, R.color.color_superhappy};
 
             public void onUpSwipe() {
                 if (mood != 4) {
@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
                 imgSmiley.setImageResource(tableauImg[mood]);
                 layout.setBackgroundResource(tableauBackground[mood]);
                 tv.setText("UpSwipe " + mood);
+
+
 
             }
 
