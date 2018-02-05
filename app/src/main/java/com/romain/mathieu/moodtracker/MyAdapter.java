@@ -1,7 +1,6 @@
 package com.romain.mathieu.moodtracker;
 
 
-import android.support.annotation.ColorInt;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,8 +22,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
     public List<MoodData> mdatas;
 
 
-
-    public MyAdapter(List<MoodData> datas){
+    public MyAdapter(List<MoodData> datas) {
         this.mdatas = datas;
     }
 
@@ -38,14 +36,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
 
     @Override
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
+
+        // Date
         holder.textViewTime.setText(mdatas.get(position).time);
 
+        // Couleur de la carte
         int colorId = mdatas.get(position).colorCard;
         int color = holder.cardView.getContext().getResources().getColor(colorId);
         holder.cardView.setCardBackgroundColor(color);
 
+        // Largeur de la carte
         holder.cardView.getLayoutParams().width = mdatas.get(position).sizeCard;
         holder.cardView.requestLayout();
+
+        // disable l'icons message si aucun message
+        if (!mdatas.get(position).messageIcons) {
+            holder.messageIcons.setVisibility(View.GONE);
+        }
 
 
     }
@@ -62,13 +69,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
         ImageButton messageIcons;
 
 
-
         public HistoryViewHolder(final View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardview);
 
             textViewTime = itemView.findViewById(R.id.textview_time);
             messageIcons = itemView.findViewById(R.id.message_icons);
+
 
             messageIcons.setClickable(true);
 
@@ -77,7 +84,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
                 @Override
                 public void onClick(View view) {
 
-                    Toast.makeText(itemView.getContext(),"j'aime le vin", Toast.LENGTH_SHORT).show();
+                    int position = getAdapterPosition();
+                    Toast.makeText(itemView.getContext(), mdatas.get(position).message, Toast.LENGTH_SHORT).show();
 
                 }
             });
