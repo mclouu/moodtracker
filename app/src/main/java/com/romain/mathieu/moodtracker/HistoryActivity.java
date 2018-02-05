@@ -11,10 +11,13 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 public class HistoryActivity extends AppCompatActivity {
 
     private ArrayList<MoodData> moodData;
+            Hashtable widthMood;
             RecyclerView recyclerView;
 
             CardView cardView;
@@ -25,6 +28,8 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
+
 
 
 
@@ -39,15 +44,21 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void initializeData() {
+        widthMood = new Hashtable();
+        widthMood.put("supperhappy", 480);
+        widthMood.put("happy", 380);
+        widthMood.put("normal", 260);
+        widthMood.put("disappointed", 140);
+        widthMood.put("sad", 88);
+
+
         moodData = new ArrayList<>();
-        moodData.add(new MoodData("TDB", "trop bon la pizza", R.color.color_superhappy));
-        moodData.add(new MoodData("Avant-hier", "trop bon la pizza", R.color.color_happy));
-        moodData.add(new MoodData("Il y a un jours", "trop bon la pizza", R.color.color_disappointed));
-        moodData.add(new MoodData("Il y a deux jours", "trop bon la pizza", R.color.color_normal));
-        moodData.add(new MoodData("Il y a trois jours", "trop bon la pizza", R.color.color_sad));
-        moodData.add(new MoodData("Il y a quatre jours", "trop bon la pizza", R.color.color_superhappy));
-        moodData.add(new MoodData("Il y a cinq jours", "trop bon la pizza", R.color.color_superhappy));
-        moodData.add(new MoodData("Il y a six jours", "trop bon la pizza", R.color.color_superhappy));
-        moodData.add(new MoodData("Il y a une semaine", "trop bon la pizza", R.color.color_superhappy));
+        moodData.add(new MoodData("Hier", "trop bon le vin", R.color.color_superhappy, (int) widthMood.get("supperhappy"), true));
+        moodData.add(new MoodData("Avant-hier", "", R.color.color_happy, (int) widthMood.get("happy"),false));
+        moodData.add(new MoodData("Il y a trois jours", "TDB", R.color.color_normal, (int) widthMood.get("normal"),true));
+        moodData.add(new MoodData("Il y a quatre jours", "", R.color.color_disappointed, (int) widthMood.get("disappointed"),false));
+        moodData.add(new MoodData("Il y a cinq jours", "pas bon ce vin", R.color.color_sad, (int) widthMood.get("sad"),true));
+        moodData.add(new MoodData("Il y a six jours", "trop bon la pizza", R.color.color_superhappy, (int) widthMood.get("supperhappy"),true));
+        moodData.add(new MoodData("Il y a une semaine", "trop bon la pizza", R.color.color_superhappy, (int) widthMood.get("supperhappy"),true));
     }
 }
