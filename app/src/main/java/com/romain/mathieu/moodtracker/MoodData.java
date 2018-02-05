@@ -7,17 +7,15 @@ package com.romain.mathieu.moodtracker;
 public class MoodData {
     String time;
     String message;
-    boolean messageIcons;
     int sizeCard;
     int colorCard;
 
 
-    public MoodData(String time, String message, int colorCard, int sizeCard, boolean messageIcons) {
+    public MoodData(String time, String message, int colorCard, int sizeCard) {
         this.time = time;
         this.message = message;
         this.colorCard = colorCard;
         this.sizeCard = sizeCard;
-        this.messageIcons = messageIcons;
 
 
     }

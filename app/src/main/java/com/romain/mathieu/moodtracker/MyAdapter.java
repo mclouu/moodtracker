@@ -50,7 +50,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
         holder.cardView.requestLayout();
 
         // disable l'icons message si aucun message
-        if (!mdatas.get(position).messageIcons) {
+        if (mdatas.get(position).message.isEmpty()) {
             holder.messageIcons.setVisibility(View.GONE);
         }
 

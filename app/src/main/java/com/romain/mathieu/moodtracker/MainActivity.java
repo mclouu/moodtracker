@@ -1,10 +1,14 @@
 package com.romain.mathieu.moodtracker;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     int mood = 3;
     ImageView imgSmiley;
     ImageButton btnHistory;
+    ImageButton btnAddMessage;
 
 
     @Override
@@ -24,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
 
         imgSmiley = findViewById(R.id.img_smiley);
         swipe();
+
+        btnAddMessage = findViewById(R.id.btn_add_message);
+        btnAddMessage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
 
 
         btnHistory = findViewById(R.id.btn_history);
@@ -59,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 tv.setText("UpSwipe " + mood);
 
 
-
             }
 
             public void onDownSwipe() {
@@ -74,6 +86,32 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
     }
+
+    public void showDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.popup_add_message, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText editTextMessage = dialogView.findViewById(R.id.edittext_message);
+
+        dialogBuilder.setTitle("Ajouter une note");
+        dialogBuilder.setPositiveButton("valider", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        });
+        dialogBuilder.setNegativeButton("annuler", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
+    }
+
 }
+
 
