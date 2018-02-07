@@ -7,58 +7,70 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    int mood = 3;
-    ImageView imgSmiley;
+    int mood;
+
     ImageButton btnHistory;
     ImageButton btnAddMessage;
+    //test variable
+    Button btnMidNight;
+    TextView tvMessage;
+    TextView tvMood;
 
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferencesUtils.saveMood(this, mood);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        imgSmiley = findViewById(R.id.img_smiley);
-        swipe();
+
+        mood = SharedPreferencesUtils.getMood(this);
+
+        ImageView imgSmiley = findViewById(R.id.img_smiley);
+        RelativeLayout layout = findViewById(R.id.main_activity_layout);
+        int tableauImg[] = {R.drawable.smileysad, R.drawable.smileydisappointed, R.drawable.smileynormal, R.drawable.smileyhappy, R.drawable.smileysuperhappy};
+        int tableauBackground[] = {R.color.color_sad, R.color.color_disappointed, R.color.color_normal, R.color.color_happy, R.color.color_superhappy};
+        imgSmiley.setImageResource(tableauImg[mood]);
+        layout.setBackgroundResource(tableauBackground[mood]);
+
+
 
         btnAddMessage = findViewById(R.id.btn_add_message);
-        btnAddMessage.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog();
-            }
-        });
-
-
         btnHistory = findViewById(R.id.btn_history);
-        btnHistory.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(MainActivity.this, HistoryActivity.class);
-                startActivity(myIntent);
-            }
-        });
+        btnMidNight = findViewById(R.id.btn_midnight);
+
+        btnAddMessage.setOnClickListener(this);
+        btnHistory.setOnClickListener(this);
+        btnMidNight.setOnClickListener(this);
+
+        swipe();
 
 
     }
 
+
     public void swipe() {
         RelativeLayout layout = findViewById(R.id.main_activity_layout);
-
 
         layout.setOnTouchListener(new SwipeDirectionListener(MainActivity.this) {
             ImageView imgSmiley = findViewById(R.id.img_smiley);
             RelativeLayout layout = findViewById(R.id.main_activity_layout);
-            TextView tv = findViewById(R.id.tv);
 
             int tableauImg[] = {R.drawable.smileysad, R.drawable.smileydisappointed, R.drawable.smileynormal, R.drawable.smileyhappy, R.drawable.smileysuperhappy};
             int tableauBackground[] = {R.color.color_sad, R.color.color_disappointed, R.color.color_normal, R.color.color_happy, R.color.color_superhappy};
@@ -69,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 imgSmiley.setImageResource(tableauImg[mood]);
                 layout.setBackgroundResource(tableauBackground[mood]);
-                tv.setText("UpSwipe " + mood);
-
 
             }
 
@@ -80,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 imgSmiley.setImageResource(tableauImg[mood]);
                 layout.setBackgroundResource(tableauBackground[mood]);
-                tv.setText("DownSwipe " + mood);
 
             }
 
@@ -100,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setTitle("Ajouter une note");
         dialogBuilder.setPositiveButton("valider", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-
+                SharedPreferencesUtils.saveMessage(MainActivity.this, editTextMessage.getText().toString());
             }
         });
         dialogBuilder.setNegativeButton("annuler", new DialogInterface.OnClickListener() {
@@ -110,6 +119,24 @@ public class MainActivity extends AppCompatActivity {
         });
         AlertDialog b = dialogBuilder.create();
         b.show();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (btnAddMessage == view) {
+            showDialog();
+        } else if (btnHistory == view) {
+            Intent myIntent = new Intent(MainActivity.this, HistoryActivity.class);
+            startActivity(myIntent);
+        } else if (btnMidNight == view) {
+            Toast.makeText(getApplication(), "il est minuit héhé", Toast.LENGTH_SHORT).show();
+            tvMessage = findViewById(R.id.tv_test_message);
+            tvMood = findViewById(R.id.tv_test_mood);
+            tvMessage.setText(SharedPreferencesUtils.getMessage(this));
+            tvMood.setText(String.valueOf(SharedPreferencesUtils.getMood(this)));
+
+
+        }
     }
 
 }
