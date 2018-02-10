@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -13,13 +14,16 @@ public class HistoryActivity extends AppCompatActivity {
 
     private ArrayList<MoodData> moodData;
     Hashtable widthMood;
+    Hashtable colorMood;
     RecyclerView recyclerView;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
 
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -33,21 +37,25 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void initializeData() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
         widthMood = new Hashtable();
-        widthMood.put("supperhappy", 480);
-        widthMood.put("happy", 380);
-        widthMood.put("normal", 260);
-        widthMood.put("disappointed", 140);
-        widthMood.put("sad", 88);
+        widthMood.put(4, (float) metrics.widthPixels); // is supperhappy
+        widthMood.put(3, (float) metrics.widthPixels * 0.75f); // is happy
+        widthMood.put(2, (float) metrics.widthPixels * 0.50f); // is normal
+        widthMood.put(1, (float) metrics.widthPixels * 0.37f); // is disappointed
+        widthMood.put(0, (float) metrics.widthPixels * 0.25f); //is sad
+
+        colorMood = new Hashtable();
+        colorMood.put(4, R.color.color_superhappy);
+        colorMood.put(3, R.color.color_happy);
+        colorMood.put(2, R.color.color_normal);
+        colorMood.put(1, R.color.color_disappointed);
+        colorMood.put(0, R.color.color_sad);
 
 
         moodData = new ArrayList<>();
-        moodData.add(new MoodData("Hier", "Aujourd'hui j'ai bu un très bon vin !", R.color.color_superhappy, (int) widthMood.get("supperhappy")));
-        moodData.add(new MoodData("Avant-hier", "", R.color.color_happy, (int) widthMood.get("happy")));
-        moodData.add(new MoodData("Il y a trois jours", "Bonne journée, mais rien d'original", R.color.color_normal, (int) widthMood.get("normal")));
-        moodData.add(new MoodData("Il y a quatre jours", "", R.color.color_disappointed, (int) widthMood.get("disappointed")));
-        moodData.add(new MoodData("Il y a cinq jours", "Ce vin était vraiment pas bon !", R.color.color_sad, (int) widthMood.get("sad")));
-        moodData.add(new MoodData("Il y a six jours", "trop bon la pizza", R.color.color_superhappy, (int) widthMood.get("supperhappy")));
-        moodData.add(new MoodData("Il y a une semaine", "trop bon la pizza", R.color.color_superhappy, (int) widthMood.get("supperhappy")));
+        moodData.add(new MoodData("Hier", SharedPreferencesUtils.getMessage(this), (int) colorMood.get(SharedPreferencesUtils.getMood(this)), (Float) widthMood.get(SharedPreferencesUtils.getMood(this))));
     }
 }

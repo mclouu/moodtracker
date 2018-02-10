@@ -46,7 +46,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
         holder.cardView.setCardBackgroundColor(color);
 
         // Largeur de la carte
-        holder.cardView.getLayoutParams().width = mdatas.get(position).sizeCard;
+        holder.cardView.getLayoutParams().width = (int) mdatas.get(position).sizeCard;
         holder.cardView.requestLayout();
 
         // disable l'icons message si aucun message

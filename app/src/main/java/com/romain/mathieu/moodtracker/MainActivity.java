@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView tvMood;
 
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -40,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
 
+
+
         mood = SharedPreferencesUtils.getMood(this);
 
         ImageView imgSmiley = findViewById(R.id.img_smiley);
@@ -48,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int tableauBackground[] = {R.color.color_sad, R.color.color_disappointed, R.color.color_normal, R.color.color_happy, R.color.color_superhappy};
         imgSmiley.setImageResource(tableauImg[mood]);
         layout.setBackgroundResource(tableauBackground[mood]);
-
 
 
         btnAddMessage = findViewById(R.id.btn_add_message);

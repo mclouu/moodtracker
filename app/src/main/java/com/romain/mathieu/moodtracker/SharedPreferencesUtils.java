@@ -14,7 +14,6 @@ public class SharedPreferencesUtils {
     public static final String CLE_MOOD = "CLE_MOOD";
 
 
-
     public static void saveMessage(Context context, String message) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

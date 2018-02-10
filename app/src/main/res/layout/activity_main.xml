@@ -10,25 +10,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:textColor="@color/colorAccent"
-        android:text="Message"/>
+        android:text="Message"
+        android:textColor="@color/colorAccent" />
 
     <TextView
         android:id="@+id/tv_test_mood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:textColor="@color/colorAccent"
-        android:text="MOOD"/>
+        android:text="MOOD"
+        android:textColor="@color/colorAccent" />
 
 
     <ImageView
         android:id="@+id/img_smiley"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/smileyhappy"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:src="@drawable/smileyhappy" />
 
     <ImageButton
         android:id="@+id/btn_add_message"
@@ -43,9 +43,9 @@
         android:id="@+id/btn_midnight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:text="test"/>
+        android:layout_centerHorizontal="true"
+        android:text="test" />
 
     <ImageButton
         android:id="@+id/btn_history"

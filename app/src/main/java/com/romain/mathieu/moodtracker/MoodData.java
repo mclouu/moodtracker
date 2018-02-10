@@ -7,11 +7,11 @@ package com.romain.mathieu.moodtracker;
 public class MoodData {
     String time;
     String message;
-    int sizeCard;
+    float sizeCard;
     int colorCard;
 
 
-    public MoodData(String time, String message, int colorCard, int sizeCard) {
+    public MoodData(String time, String message, int colorCard, float sizeCard) {
         this.time = time;
         this.message = message;
         this.colorCard = colorCard;
