@@ -18,9 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -35,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //test variable
     Button btnMidNight;
     // array varible
-    public static ArrayList<MoodData> moodData;
+    static ArrayList<MoodData> moodData;
     Hashtable widthMood;
     Hashtable colorMood;
     Hashtable position;
@@ -45,9 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        moodData = new ArrayList<>();
-
-        getArrayList();
 
 
         mood = SharedPreferencesUtils.getMood(this);
@@ -143,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (btnMidNight == view) {
             Toast.makeText(getApplication(), "il est minuit héhé", Toast.LENGTH_SHORT).show();
             SharedPreferencesUtils.saveMood(this, mood);
+
             moodData.add(new MoodData((String) position.get(time), SharedPreferencesUtils.getMessage(this), (int) colorMood.get(SharedPreferencesUtils.getMood(this)), (Float) widthMood.get(SharedPreferencesUtils.getMood(this))));
 
 
@@ -150,6 +146,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initializeData() {
+
+        moodData = new ArrayList<>();
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
@@ -188,20 +186,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.apply();
     }
 
-    public void getArrayList() {
-        SharedPreferences sharedPreferences = getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("moodDataList", null);
-        Type type = new TypeToken<ArrayList<MoodData>>() {
-        }.getType();
-        moodData = gson.fromJson(json, type);
-    }
-
 
     @Override
     protected void onPause() {
         super.onPause();
-        saveArrayList();
+        if (!moodData.isEmpty()) {
+            saveArrayList();
+        }
+
     }
 }
 
