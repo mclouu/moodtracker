@@ -19,10 +19,10 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder> {
 
-    public List<MoodData> mdatas;
+    private List<MoodData> mdatas;
 
 
-    public MyAdapter(List<MoodData> datas) {
+    MyAdapter(List<MoodData> datas) {
         this.mdatas = datas;
     }
 
@@ -30,8 +30,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
     @Override
     public HistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false);
-        HistoryViewHolder viewHolder = new HistoryViewHolder(v);
-        return viewHolder;
+        return new HistoryViewHolder(v);
     }
 
     @Override
@@ -59,17 +58,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
 
     @Override
     public int getItemCount() {
-        return this.mdatas.size();
+        if (mdatas == null) {
+            return 0;
+        } else {
+            return this.mdatas.size();
+        }
+
+
     }
 
-    public class HistoryViewHolder extends RecyclerView.ViewHolder {
+    class HistoryViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
         TextView textViewTime;
         ImageButton messageIcons;
 
 
-        public HistoryViewHolder(final View itemView) {
+        HistoryViewHolder(final View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardview);
 
