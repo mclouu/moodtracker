@@ -44,8 +44,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (SharedPreferencesUtils.containsMood(this)){
+            mood = SharedPreferencesUtils.getMood(this);
+        }else{
+            mood = 3;
+        }
 
-        mood = SharedPreferencesUtils.getMood(this);
 
         ImageView imgSmiley = findViewById(R.id.img_smiley);
         RelativeLayout layout = findViewById(R.id.main_activity_layout);
