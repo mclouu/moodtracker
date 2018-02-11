@@ -32,6 +32,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setReverseLayout(true);
         recyclerView.setLayoutManager(llm);
 
 
