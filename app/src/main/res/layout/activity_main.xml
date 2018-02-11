@@ -5,22 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/color_happy">
 
-    <TextView
-        android:id="@+id/tv_test_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:text="Message"
-        android:textColor="@color/colorAccent" />
-
-    <TextView
-        android:id="@+id/tv_test_mood"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:text="MOOD"
-        android:textColor="@color/colorAccent" />
-
 
     <ImageView
         android:id="@+id/img_smiley"
