@@ -39,7 +39,7 @@ public class SharedPreferencesUtils {
         return sharedPreferences.getInt(CLE_MOOD, 0);
     }
 
-    public static boolean containsMood(Context context){
+    public static boolean containsMood(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
         return sharedPreferences.contains(CLE_MOOD);
     }
