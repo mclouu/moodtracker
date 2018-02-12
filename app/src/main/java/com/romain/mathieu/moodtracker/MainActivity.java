@@ -32,21 +32,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton btnAddMessage;
     //test variable
     Button btnMidNight;
-    // array varible
+    // array and Hashtable variable
     static ArrayList<MoodData> moodData;
     Hashtable widthMood;
     Hashtable colorMood;
     Hashtable position;
-    int time = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (SharedPreferencesUtils.containsMood(this)){
+        if (SharedPreferencesUtils.containsMood(this)) {
             mood = SharedPreferencesUtils.getMood(this);
-        }else{
+        } else {
             mood = 3;
         }
 
@@ -140,10 +139,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent myIntent = new Intent(MainActivity.this, HistoryActivity.class);
             startActivity(myIntent);
         } else if (btnMidNight == view) {
+
             Toast.makeText(getApplication(), "il est minuit héhé", Toast.LENGTH_SHORT).show();
             SharedPreferencesUtils.saveMood(this, mood);
 
-            moodData.add(new MoodData((String) position.get(time), SharedPreferencesUtils.getMessage(this), (int) colorMood.get(SharedPreferencesUtils.getMood(this)), (Float) widthMood.get(SharedPreferencesUtils.getMood(this))));
+
+            if (moodData.size() == 7) {
+                moodData.remove(0);
+                moodData.add(new MoodData((String) position.get(0), SharedPreferencesUtils.getMessage(this), (int) colorMood.get(SharedPreferencesUtils.getMood(this)), (Float) widthMood.get(SharedPreferencesUtils.getMood(this))));
+            }else{
+                moodData.add(new MoodData((String) position.get(0), SharedPreferencesUtils.getMessage(this), (int) colorMood.get(SharedPreferencesUtils.getMood(this)), (Float) widthMood.get(SharedPreferencesUtils.getMood(this))));
+
+            }
 
 
         }
