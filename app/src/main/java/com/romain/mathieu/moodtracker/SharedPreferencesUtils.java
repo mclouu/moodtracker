@@ -10,38 +10,37 @@ import android.content.SharedPreferences;
 public class SharedPreferencesUtils {
 
     public static final String MY_FILE = "MySharedPreference.xml";
-    public static final String CLE_MESSAGE = "CLE_MESSAGE";
-    public static final String CLE_MOOD = "CLE_MOOD";
-
+    public static final String KEY_MESSAGE = "KEY_MESSAGE";
+    public static final String KEY_MOOD = "KEY_MOOD";
 
     public static void saveMessage(Context context, String message) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(CLE_MESSAGE, message);
+        editor.putString(KEY_MESSAGE, message);
         editor.apply();
     }
 
     public static String getMessage(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(CLE_MESSAGE, "");
+        return sharedPreferences.getString(KEY_MESSAGE, "");
     }
 
 
     public static void saveMood(Context context, int mood) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(CLE_MOOD, mood);
+        editor.putInt(KEY_MOOD, mood);
         editor.apply();
     }
 
     public static int getMood(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(CLE_MOOD, 0);
+        return sharedPreferences.getInt(KEY_MOOD, 0);
     }
 
     public static boolean containsMood(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
-        return sharedPreferences.contains(CLE_MOOD);
+        return sharedPreferences.contains(KEY_MOOD);
     }
 
 
