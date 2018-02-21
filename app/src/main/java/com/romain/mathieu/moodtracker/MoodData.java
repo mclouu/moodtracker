@@ -1,5 +1,7 @@
 package com.romain.mathieu.moodtracker;
 
+import java.util.Hashtable;
+
 /**
  * Created by Romain on 04/02/2018.
  */
@@ -9,6 +11,7 @@ public class MoodData {
     String message;
     float sizeCard;
     int colorCard;
+    private Hashtable dayAgo;
 
 
     public MoodData(String time, String message, int colorCard, float sizeCard) {
@@ -18,5 +21,19 @@ public class MoodData {
         this.sizeCard = sizeCard;
 
 
+    }
+
+
+    public String getDate(int time) {
+        dayAgo = new Hashtable();
+        dayAgo.put(7, "Il y a une semaine");
+        dayAgo.put(6, "Il y a 6 jours");
+        dayAgo.put(5, "Il y a 5 jours");
+        dayAgo.put(4, "Il y a 4 jours");
+        dayAgo.put(3, "Il y a 3 jours");
+        dayAgo.put(2, "Avant-hier");
+        dayAgo.put(1, "Hier");
+
+        return (String) dayAgo.get(time);
     }
 }

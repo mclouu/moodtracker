@@ -1,5 +1,7 @@
 package com.romain.mathieu.moodtracker;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Hashtable;
 
 import static com.romain.mathieu.moodtracker.SharedPreferencesUtils.MY_FILE;
@@ -36,12 +39,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static ArrayList<MoodData> moodData;
     Hashtable widthMood;
     Hashtable colorMood;
-    Hashtable position;
+    // AlarmManager variable
+    private AlarmManager alarmMgr;
+    private PendingIntent alarmIntent;
+    // Day ago variable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        initializeData();
+
+        AlarmMidnight(this);
 
         if (SharedPreferencesUtils.containsMood(this)) {
             mood = SharedPreferencesUtils.getMood(this);
@@ -67,9 +78,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnMidNight.setOnClickListener(this);
 
         swipe();
-
-
-        initializeData();
 
 
     }
@@ -134,25 +142,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (btnAddMessage == view) {
+
             showDialog();
         } else if (btnHistory == view) {
             Intent myIntent = new Intent(MainActivity.this, HistoryActivity.class);
             startActivity(myIntent);
         } else if (btnMidNight == view) {
-
             Toast.makeText(getApplication(), "il est minuit héhé", Toast.LENGTH_SHORT).show();
             SharedPreferencesUtils.saveMood(this, mood);
 
 
-            if (moodData.size() == 7) {
-                moodData.remove(0);
-                moodData.add(new MoodData((String) position.get(0), SharedPreferencesUtils.getMessage(this), (int) colorMood.get(SharedPreferencesUtils.getMood(this)), (Float) widthMood.get(SharedPreferencesUtils.getMood(this))));
-            }else{
-                moodData.add(new MoodData((String) position.get(0), SharedPreferencesUtils.getMessage(this), (int) colorMood.get(SharedPreferencesUtils.getMood(this)), (Float) widthMood.get(SharedPreferencesUtils.getMood(this))));
-
-            }
-
-
+            moodData.add(new MoodData(" ", SharedPreferencesUtils.getMessage(this), (int) colorMood.get(SharedPreferencesUtils.getMood(this)), (Float) widthMood.get(SharedPreferencesUtils.getMood(this))));
         }
     }
 
@@ -176,15 +176,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         colorMood.put(1, R.color.color_disappointed);
         colorMood.put(0, R.color.color_sad);
 
-        position = new Hashtable();
-        position.put(6, "Il y a une semaine");
-        position.put(5, "Il y a 6 jours");
-        position.put(4, "Il y a 5 jours");
-        position.put(3, "Il y a 4 jours");
-        position.put(2, "Il y a 3 jours");
-        position.put(1, "Avant-hier");
-        position.put(0, "Hier");
-
 
     }
 
@@ -205,6 +196,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             saveArrayList();
         }
 
+    }
+
+    private void AlarmMidnight(Context context) {
+
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.add(Calendar.DATE, 1);
+
+        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, SilenceBroadcastReceiver.class);
+        alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+
+        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
     }
 }
 
