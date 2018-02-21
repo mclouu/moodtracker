@@ -35,9 +35,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
 
     @Override
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
+        final MoodData item = mdatas.get(position);
+
 
         // Date
-        holder.textViewTime.setText(mdatas.get(position).time);
+        holder.textViewTime.setText(item.getDate(mdatas.size() - position));
 
         // Couleur de la carte
         int colorId = mdatas.get(position).colorCard;
@@ -45,11 +47,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
         holder.cardView.setCardBackgroundColor(color);
 
         // Largeur de la carte
-        holder.cardView.getLayoutParams().width = (int) mdatas.get(position).sizeCard;
+        holder.cardView.getLayoutParams().width = (int) item.sizeCard;
         holder.cardView.requestLayout();
 
         // disable l'icons message si aucun message
-        if (mdatas.get(position).message.isEmpty()) {
+        if (item.message.isEmpty()) {
             holder.messageIcons.setVisibility(View.GONE);
         }
 
@@ -60,11 +62,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
     public int getItemCount() {
         if (mdatas == null) {
             return 0;
-        } else {
-            return this.mdatas.size();
+        } else if (mdatas.size() == 8) {
+            mdatas.remove(0);
         }
-
-
+        return mdatas.size();
     }
 
     class HistoryViewHolder extends RecyclerView.ViewHolder {
@@ -83,8 +84,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
 
 
             messageIcons.setClickable(true);
-
-
             messageIcons.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
