@@ -1,4 +1,4 @@
-package com.romain.mathieu.moodtracker;
+package com.romain.mathieu.moodtracker.Controller;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -20,12 +20,17 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.romain.mathieu.moodtracker.Model.MoodData;
+import com.romain.mathieu.moodtracker.R;
+import com.romain.mathieu.moodtracker.Model.SharedPreferencesUtils;
+import com.romain.mathieu.moodtracker.Model.SilenceBroadcastReceiver;
+import com.romain.mathieu.moodtracker.Model.SwipeDirectionListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Hashtable;
 
-import static com.romain.mathieu.moodtracker.SharedPreferencesUtils.MY_FILE;
+import static com.romain.mathieu.moodtracker.Model.SharedPreferencesUtils.MY_FILE;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -42,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // AlarmManager variable
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
-    // Day ago variable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

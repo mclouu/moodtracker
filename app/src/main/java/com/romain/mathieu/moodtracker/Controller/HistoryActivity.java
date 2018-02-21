@@ -1,4 +1,4 @@
-package com.romain.mathieu.moodtracker;
+package com.romain.mathieu.moodtracker.Controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,11 +9,14 @@ import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.romain.mathieu.moodtracker.Model.MoodData;
+import com.romain.mathieu.moodtracker.View.MyAdapter;
+import com.romain.mathieu.moodtracker.R;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import static com.romain.mathieu.moodtracker.SharedPreferencesUtils.MY_FILE;
+import static com.romain.mathieu.moodtracker.Model.SharedPreferencesUtils.MY_FILE;
 
 
 public class HistoryActivity extends AppCompatActivity {

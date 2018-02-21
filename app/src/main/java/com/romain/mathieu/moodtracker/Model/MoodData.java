@@ -1,4 +1,4 @@
-package com.romain.mathieu.moodtracker;
+package com.romain.mathieu.moodtracker.Model;
 
 import java.util.Hashtable;
 
@@ -7,11 +7,11 @@ import java.util.Hashtable;
  */
 
 public class MoodData {
-    String time;
-    String message;
-    float sizeCard;
-    int colorCard;
-    private Hashtable dayAgo;
+    public String time;
+    public String message;
+    public float sizeCard;
+    public int colorCard;
+    public Hashtable dayAgo;
 
 
     public MoodData(String time, String message, int colorCard, float sizeCard) {

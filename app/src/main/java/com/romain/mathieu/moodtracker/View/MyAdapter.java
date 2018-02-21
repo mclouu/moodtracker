@@ -1,4 +1,4 @@
-package com.romain.mathieu.moodtracker;
+package com.romain.mathieu.moodtracker.View;
 
 
 import android.support.v7.widget.CardView;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.romain.mathieu.moodtracker.Model.MoodData;
+import com.romain.mathieu.moodtracker.R;
 
 import java.util.List;
 
