@@ -5,23 +5,20 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.google.gson.Gson;
 import com.romain.mathieu.moodtracker.Model.MoodData;
+import com.romain.mathieu.moodtracker.Model.MyBroadcastReceiver;
 import com.romain.mathieu.moodtracker.Model.SharedPreferencesUtils;
-import com.romain.mathieu.moodtracker.Model.SilenceBroadcastReceiver;
 import com.romain.mathieu.moodtracker.Model.SwipeDirectionListener;
 import com.romain.mathieu.moodtracker.R;
 
@@ -29,17 +26,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Hashtable;
 
-import static com.romain.mathieu.moodtracker.Model.SharedPreferencesUtils.MY_FILE;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    int mood;
 
+    public static int mood;
+
+    // Variable View
     ImageButton btnHistory;
     ImageButton btnAddMessage;
-    //test variable
-    Button btnMidNight;
-    // array and Hashtable variable
+    RelativeLayout layout;
+
+    // Variable ArrayList and Hashtable
     public static ArrayList<MoodData> moodData;
     public static Hashtable widthMood;
     public static Hashtable colorMood;
@@ -49,42 +46,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        initializeData();
-
-        AlarmMidnight(this);
-
-        if (SharedPreferencesUtils.containsMood(this)) {
-            mood = SharedPreferencesUtils.getMood(this);
-        } else {
-            mood = 3;
-        }
-
-
-        ImageView imgSmiley = findViewById(R.id.img_smiley);
-        RelativeLayout layout = findViewById(R.id.main_activity_layout);
-        int tableauImg[] = {R.drawable.smileysad, R.drawable.smileydisappointed, R.drawable.smileynormal, R.drawable.smileyhappy, R.drawable.smileysuperhappy};
-        int tableauBackground[] = {R.color.color_sad, R.color.color_disappointed, R.color.color_normal, R.color.color_happy, R.color.color_superhappy};
-        imgSmiley.setImageResource(tableauImg[mood]);
-        layout.setBackgroundResource(tableauBackground[mood]);
-
-
+// findViewById ------------------------------------------------------------
         btnAddMessage = findViewById(R.id.btn_add_message);
         btnHistory = findViewById(R.id.btn_history);
-        btnMidNight = findViewById(R.id.btn_midnight);
+// findViewById ------------------------------------------------------------
 
         btnAddMessage.setOnClickListener(this);
         btnHistory.setOnClickListener(this);
-        btnMidNight.setOnClickListener(this);
 
         swipe();
-
-
+        initializeData();
+        AlarmMidnight(this);
     }
 
 
+    // When we swipe, this method (up = mood++ or down = mood--) and change imgSmiley and BackgroundColor depending on mood value.
     public void swipe() {
-        RelativeLayout layout = findViewById(R.id.main_activity_layout);
+        layout = findViewById(R.id.main_activity_layout);
 
         layout.setOnTouchListener(new SwipeDirectionListener(MainActivity.this) {
             ImageView imgSmiley = findViewById(R.id.img_smiley);
@@ -92,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             int tableauImg[] = {R.drawable.smileysad, R.drawable.smileydisappointed, R.drawable.smileynormal, R.drawable.smileyhappy, R.drawable.smileysuperhappy};
             int tableauBackground[] = {R.color.color_sad, R.color.color_disappointed, R.color.color_normal, R.color.color_happy, R.color.color_superhappy};
+
 
             public void onUpSwipe() {
                 if (mood != 4) {
@@ -116,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    // This method opens a popup to write a note
     public void showDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -139,22 +119,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         b.show();
     }
 
+    // This method listens if you click on one of the two buttons
     @Override
     public void onClick(View view) {
-        if (btnAddMessage == view) {
-
-            showDialog();
-        } else if (btnHistory == view) {
-            Intent myIntent = new Intent(MainActivity.this, HistoryActivity.class);
-            startActivity(myIntent);
-        } else if (btnMidNight == view) {
-            SharedPreferencesUtils.saveMood(this, mood);
-
-
+        switch (view.getId()) {
+            case R.id.btn_add_message:
+                showDialog();
+                break;
+            case R.id.btn_history:
+                Intent myIntent = new Intent(MainActivity.this, HistoryActivity.class);
+                startActivity(myIntent);
+                break;
         }
     }
 
+    /*
+    This method initializes the mood value if a backup exists otherwise mood = 3
+    also initializes arrayList moodData and Hashtable widthMood and colorMood
+    */
     private void initializeData() {
+
+        if (SharedPreferencesUtils.containsMood(this)) {
+            mood = SharedPreferencesUtils.getMood(this);
+        } else {
+            mood = 3;
+        }
 
         moodData = new ArrayList<>();
         DisplayMetrics metrics = new DisplayMetrics();
@@ -177,25 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void saveArrayList() {
-        SharedPreferences sharedPreferences = getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(moodData);
-        editor.putString("moodDataList", json);
-        editor.apply();
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (!moodData.isEmpty()) {
-            saveArrayList();
-        }
-
-    }
-
+    //This method executes the code in MyBroadcastReceiver at midnight
     private void AlarmMidnight(Context context) {
 
         AlarmManager alarmManager;
@@ -208,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         calendar.add(Calendar.DATE, 1);
 
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, SilenceBroadcastReceiver.class);
+        Intent intent = new Intent(context, MyBroadcastReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
 
