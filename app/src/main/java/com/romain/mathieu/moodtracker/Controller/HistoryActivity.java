@@ -10,8 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.romain.mathieu.moodtracker.Model.MoodData;
-import com.romain.mathieu.moodtracker.View.MyAdapter;
 import com.romain.mathieu.moodtracker.R;
+import com.romain.mathieu.moodtracker.View.MyAdapter;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

@@ -25,7 +25,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
     private List<MoodData> mdatas;
 
 
-    MyAdapter(List<MoodData> datas) {
+    public MyAdapter(List<MoodData> datas) {
         this.mdatas = datas;
     }
 
