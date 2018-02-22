@@ -1,5 +1,6 @@
 package com.romain.mathieu.moodtracker.Controller;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -38,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // Variable ArrayList and Hashtable
     public static ArrayList<MoodData> moodData;
-    public static Hashtable widthMood;
-    public static Hashtable colorMood;
+    public static Hashtable<Integer, Float> widthMood;
+    public static Hashtable<Integer, Integer> colorMood;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void showDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
+        @SuppressLint("InflateParams")
+        // https://possiblemobile.com/2013/05/layout-inflation-as-intended/
         final View dialogView = inflater.inflate(R.layout.popup_add_message, null);
         dialogBuilder.setView(dialogView);
 
@@ -149,14 +152,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        widthMood = new Hashtable();
+        widthMood = new Hashtable<>();
         widthMood.put(4, (float) metrics.widthPixels); // is supperhappy
         widthMood.put(3, (float) metrics.widthPixels * 0.75f); // is happy
         widthMood.put(2, (float) metrics.widthPixels * 0.50f); // is normal
         widthMood.put(1, (float) metrics.widthPixels * 0.37f); // is disappointed
         widthMood.put(0, (float) metrics.widthPixels * 0.25f); //is sad
 
-        colorMood = new Hashtable();
+        colorMood = new Hashtable<>();
         colorMood.put(4, R.color.color_superhappy);
         colorMood.put(3, R.color.color_happy);
         colorMood.put(2, R.color.color_normal);
@@ -183,7 +186,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
 
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        if (alarmManager != null) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        }
     }
 }
 
