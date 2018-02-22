@@ -3,7 +3,7 @@ package com.romain.mathieu.moodtracker.Model;
 import java.util.Hashtable;
 
 /**
- * Created by Romain on 04/02/2018.
+ * Created by Romain on 04/02/2018
  */
 
 public class MoodData {
@@ -11,10 +11,9 @@ public class MoodData {
     public String message;
     public float sizeCard;
     public int colorCard;
-    public Hashtable dayAgo;
 
 
-    public MoodData(String time, String message, int colorCard, float sizeCard) {
+    MoodData(String time, String message, int colorCard, float sizeCard) {
         this.time = time;
         this.message = message;
         this.colorCard = colorCard;
@@ -23,9 +22,9 @@ public class MoodData {
 
     }
 
-
+    // this method take a int and return a String depending on int parameter
     public String getDate(int time) {
-        dayAgo = new Hashtable();
+        Hashtable<Integer, String> dayAgo = new Hashtable<>();
         dayAgo.put(7, "Il y a une semaine");
         dayAgo.put(6, "Il y a 6 jours");
         dayAgo.put(5, "Il y a 5 jours");
@@ -34,6 +33,6 @@ public class MoodData {
         dayAgo.put(2, "Avant-hier");
         dayAgo.put(1, "Hier");
 
-        return (String) dayAgo.get(time);
+        return dayAgo.get(time);
     }
 }
