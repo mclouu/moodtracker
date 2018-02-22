@@ -17,14 +17,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.romain.mathieu.moodtracker.Model.MoodData;
-import com.romain.mathieu.moodtracker.R;
 import com.romain.mathieu.moodtracker.Model.SharedPreferencesUtils;
 import com.romain.mathieu.moodtracker.Model.SilenceBroadcastReceiver;
 import com.romain.mathieu.moodtracker.Model.SwipeDirectionListener;
+import com.romain.mathieu.moodtracker.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,12 +40,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //test variable
     Button btnMidNight;
     // array and Hashtable variable
-    static ArrayList<MoodData> moodData;
-    Hashtable widthMood;
-    Hashtable colorMood;
-    // AlarmManager variable
-    private AlarmManager alarmMgr;
-    private PendingIntent alarmIntent;
+    public static ArrayList<MoodData> moodData;
+    public static Hashtable widthMood;
+    public static Hashtable colorMood;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,11 +148,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent myIntent = new Intent(MainActivity.this, HistoryActivity.class);
             startActivity(myIntent);
         } else if (btnMidNight == view) {
-            Toast.makeText(getApplication(), "il est minuit héhé", Toast.LENGTH_SHORT).show();
             SharedPreferencesUtils.saveMood(this, mood);
 
 
-            moodData.add(new MoodData(" ", SharedPreferencesUtils.getMessage(this), (int) colorMood.get(SharedPreferencesUtils.getMood(this)), (Float) widthMood.get(SharedPreferencesUtils.getMood(this))));
         }
     }
 
@@ -204,6 +198,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void AlarmMidnight(Context context) {
 
+        AlarmManager alarmManager;
+        PendingIntent pendingIntent;
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -211,11 +207,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         calendar.set(Calendar.SECOND, 0);
         calendar.add(Calendar.DATE, 1);
 
-        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, SilenceBroadcastReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
-        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 }
 
