@@ -26,7 +26,6 @@ import com.romain.mathieu.moodtracker.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,11 +40,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // Variable sound
     MediaPlayer mediaPlayer;
 
-    // Variable ArrayList and Hashtable
-    public static ArrayList<MoodData> moodData;
-    public static Hashtable<Integer, Float> widthMood;
-    public static Hashtable<Integer, Integer> colorMood;
+    // ArrayList
+    public static ArrayList<MoodData> moodData = new ArrayList<>();
 
+    // Variable table
     public static final int tableImgSmiley[] = {R.drawable.smileysad, R.drawable.smileydisappointed, R.drawable.smileynormal, R.drawable.smileyhappy, R.drawable.smileysuperhappy};
     public static final int tableBackgroundColor[] = {R.color.color_sad, R.color.color_disappointed, R.color.color_normal, R.color.color_happy, R.color.color_superhappy};
 
@@ -69,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    // When we swipe, this method (up = mood++ or down = mood--) and change imgSmiley and BackgroundColor depending on mood value.
+    // When we swipe, this method (up = mood++ or down = mood--) plays a sound and change imgSmiley and BackgroundColor depending on mood value.
     public void swipe() {
         layout = findViewById(R.id.main_activity_layout);
 
@@ -149,28 +147,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /*
     This method initializes the mood value if a backup exists otherwise mood = 3
-    also initializes arrayList moodData and Hashtable widthMood and colorMood
+    also initializes DisplayMetrics, my variable myMetrics take a width of screen and save the width in SharedPreferences
     */
     private void initializeData() {
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        float myMetrics = metrics.widthPixels;
+        SharedPreferencesUtils.saveWidth(MainActivity.this, myMetrics);
+
 
         if (SharedPreferencesUtils.containsMood(this)) {
             mood = SharedPreferencesUtils.getMood(this);
         } else {
             mood = 3;
         }
-
-        moodData = new ArrayList<>();
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
-        widthMood = new Hashtable<>();
-        widthMood.put(4, (float) metrics.widthPixels); // is supperhappy
-        widthMood.put(3, (float) metrics.widthPixels * 0.75f); // is happy
-        widthMood.put(2, (float) metrics.widthPixels * 0.50f); // is normal
-        widthMood.put(1, (float) metrics.widthPixels * 0.37f); // is disappointed
-        widthMood.put(0, (float) metrics.widthPixels * 0.25f); //is sad
-
-
     }
 
     //This method executes the code in MyBroadcastReceiver at midnight
