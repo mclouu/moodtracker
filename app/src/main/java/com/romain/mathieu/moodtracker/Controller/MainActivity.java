@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Hashtable<Integer, Float> widthMood;
     public static Hashtable<Integer, Integer> colorMood;
 
+    public static final int tableImgSmiley[] = {R.drawable.smileysad, R.drawable.smileydisappointed, R.drawable.smileynormal, R.drawable.smileyhappy, R.drawable.smileysuperhappy};
+    public static final int tableBackgroundColor[] = {R.color.color_sad, R.color.color_disappointed, R.color.color_normal, R.color.color_happy, R.color.color_superhappy};
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,9 +77,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ImageView imgSmiley = findViewById(R.id.img_smiley);
             RelativeLayout layout = findViewById(R.id.main_activity_layout);
 
-            int tableauImg[] = {R.drawable.smileysad, R.drawable.smileydisappointed, R.drawable.smileynormal, R.drawable.smileyhappy, R.drawable.smileysuperhappy};
-            int tableauBackground[] = {R.color.color_sad, R.color.color_disappointed, R.color.color_normal, R.color.color_happy, R.color.color_superhappy};
-
 
             public void onUpSwipe() {
                 mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.kick);
@@ -84,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     SharedPreferencesUtils.saveMood(MainActivity.this, mood);
                     mediaPlayer.start();
                 }
-                imgSmiley.setImageResource(tableauImg[mood]);
-                layout.setBackgroundResource(tableauBackground[mood]);
+                imgSmiley.setImageResource(tableImgSmiley[mood]);
+                layout.setBackgroundResource(tableBackgroundColor[mood]);
 
             }
 
@@ -96,8 +97,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     SharedPreferencesUtils.saveMood(MainActivity.this, mood);
                     mediaPlayer.start();
                 }
-                imgSmiley.setImageResource(tableauImg[mood]);
-                layout.setBackgroundResource(tableauBackground[mood]);
+                imgSmiley.setImageResource(tableImgSmiley[mood]);
+                layout.setBackgroundResource(tableBackgroundColor[mood]);
 
             }
 
@@ -168,13 +169,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         widthMood.put(2, (float) metrics.widthPixels * 0.50f); // is normal
         widthMood.put(1, (float) metrics.widthPixels * 0.37f); // is disappointed
         widthMood.put(0, (float) metrics.widthPixels * 0.25f); //is sad
-
-        colorMood = new Hashtable<>();
-        colorMood.put(4, R.color.color_superhappy);
-        colorMood.put(3, R.color.color_happy);
-        colorMood.put(2, R.color.color_normal);
-        colorMood.put(1, R.color.color_disappointed);
-        colorMood.put(0, R.color.color_sad);
 
 
     }
