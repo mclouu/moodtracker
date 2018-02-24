@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             public void onUpSwipe() {
-                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.kick);
+                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.up);
                 if (mood != 4) {
                     mood++;
                     SharedPreferencesUtils.saveMood(MainActivity.this, mood);
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             public void onDownSwipe() {
-                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.kick);
+                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.down);
                 if (mood != 0) {
                     mood--;
                     SharedPreferencesUtils.saveMood(MainActivity.this, mood);
