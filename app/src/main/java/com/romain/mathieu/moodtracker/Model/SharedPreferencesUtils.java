@@ -20,6 +20,7 @@ public class SharedPreferencesUtils {
     static final String MY_FILE = "MySharedPreference.xml";
     static final String KEY_MESSAGE = "KEY_MESSAGE";
     static final String KEY_MOOD = "KEY_MOOD";
+    static final String KEY_WIDTH = "KEY_WIDTH";
 
     public static void saveMessage(Context context, String message) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
@@ -56,6 +57,18 @@ public class SharedPreferencesUtils {
     public static boolean containsMood(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
         return sharedPreferences.contains(KEY_MOOD);
+    }
+
+    public static void saveWidth(Context context, float width) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putFloat(KEY_WIDTH, width);
+        editor.apply();
+    }
+
+    public static float getWidth(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
+        return sharedPreferences.getFloat(KEY_WIDTH, 0.0f);
     }
 
     static void saveArrayList(Context context) {
