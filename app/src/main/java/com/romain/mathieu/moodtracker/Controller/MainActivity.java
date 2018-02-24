@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageButton btnHistory;
     ImageButton btnAddMessage;
     RelativeLayout layout;
+
+    // Variable sound
+    MediaPlayer mediaPlayer;
 
     // Variable ArrayList and Hashtable
     public static ArrayList<MoodData> moodData;
@@ -74,9 +78,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             public void onUpSwipe() {
+                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.kick);
                 if (mood != 4) {
                     mood++;
                     SharedPreferencesUtils.saveMood(MainActivity.this, mood);
+                    mediaPlayer.start();
                 }
                 imgSmiley.setImageResource(tableauImg[mood]);
                 layout.setBackgroundResource(tableauBackground[mood]);
@@ -84,9 +90,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             public void onDownSwipe() {
+                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.kick);
                 if (mood != 0) {
                     mood--;
                     SharedPreferencesUtils.saveMood(MainActivity.this, mood);
+                    mediaPlayer.start();
                 }
                 imgSmiley.setImageResource(tableauImg[mood]);
                 layout.setBackgroundResource(tableauBackground[mood]);
