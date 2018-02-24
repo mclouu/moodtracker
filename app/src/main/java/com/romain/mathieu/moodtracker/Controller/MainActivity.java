@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onUpSwipe() {
                 if (mood != 4) {
                     mood++;
+                    SharedPreferencesUtils.saveMood(MainActivity.this, mood);
                 }
                 imgSmiley.setImageResource(tableauImg[mood]);
                 layout.setBackgroundResource(tableauBackground[mood]);
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onDownSwipe() {
                 if (mood != 0) {
                     mood--;
+                    SharedPreferencesUtils.saveMood(MainActivity.this, mood);
                 }
                 imgSmiley.setImageResource(tableauImg[mood]);
                 layout.setBackgroundResource(tableauBackground[mood]);
