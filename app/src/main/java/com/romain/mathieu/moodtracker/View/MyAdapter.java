@@ -24,7 +24,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
 
     private List<MoodData> mdatas;
 
-
+    // Constructor
     public MyAdapter(List<MoodData> datas) {
         this.mdatas = datas;
     }
@@ -44,16 +44,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
         // Date
         holder.textViewTime.setText(item.getDate(mdatas.size() - position));
 
-        // Couleur de la carte
+        // cardView color
         int colorId = mdatas.get(position).colorCard;
         int color = holder.cardView.getContext().getResources().getColor(colorId);
         holder.cardView.setCardBackgroundColor(color);
 
-        // Largeur de la carte
+        // width cardView
         holder.cardView.getLayoutParams().width = (int) item.sizeCard;
         holder.cardView.requestLayout();
 
-        // disable l'icons message si aucun message
+        // icons are disabled if there is no message
         if (item.message.isEmpty()) {
             holder.messageIcons.setVisibility(View.GONE);
         }
@@ -61,6 +61,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
 
     }
 
+    /*
+    If there is no arrayList return 0
+    At the creation of the 8th card, we delete the first card (index 0) to have only 7 cardView (one week)
+    return arrayList size
+    */
     @Override
     public int getItemCount() {
         if (mdatas == null) {
@@ -73,6 +78,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
 
     class HistoryViewHolder extends RecyclerView.ViewHolder {
 
+        //Variable
         CardView cardView;
         TextView textViewTime;
         ImageButton messageIcons;
@@ -80,10 +86,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.HistoryViewHolder>
 
         HistoryViewHolder(final View itemView) {
             super(itemView);
+            // findViewById ------------------------------------------------------------
             cardView = itemView.findViewById(R.id.cardview);
-
             textViewTime = itemView.findViewById(R.id.textview_time);
             messageIcons = itemView.findViewById(R.id.message_icons);
+            // findViewById ------------------------------------------------------------
 
 
             messageIcons.setClickable(true);
