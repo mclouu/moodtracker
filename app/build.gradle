@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.romain.mathieuu.moodtracker"
-        minSdkVersion 22
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 2
         versionName "1"
