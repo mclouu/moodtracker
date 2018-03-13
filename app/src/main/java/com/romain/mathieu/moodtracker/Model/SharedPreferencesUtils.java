@@ -21,6 +21,7 @@ public class SharedPreferencesUtils {
     static final String KEY_MESSAGE = "KEY_MESSAGE";
     static final String KEY_MOOD = "KEY_MOOD";
     static final String KEY_WIDTH = "KEY_WIDTH";
+    static final String KEY_LIST = "KEY_LIST";
 
     public static void saveMessage(Context context, String message) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
@@ -76,17 +77,22 @@ public class SharedPreferencesUtils {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(moodData);
-        editor.putString("moodDataList", json);
+        editor.putString(KEY_LIST, json);
         editor.apply();
     }
 
     public static void getArrayList(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = sharedPreferences.getString("moodDataList", null);
+        String json = sharedPreferences.getString(KEY_LIST, null);
         Type type = new TypeToken<ArrayList<MoodData>>() {
         }.getType();
         moodData = gson.fromJson(json, type);
+    }
+
+    public static boolean containsArrayList(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MY_FILE, Context.MODE_PRIVATE);
+        return sharedPreferences.contains(KEY_LIST);
     }
 
 
