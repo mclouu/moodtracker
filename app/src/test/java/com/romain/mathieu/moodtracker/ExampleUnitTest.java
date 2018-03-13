@@ -1,4 +1,4 @@
-package com.mathieu.romain.moodtracker;
+package com.romain.romain.moodtracker;
 
 import org.junit.Test;
 
