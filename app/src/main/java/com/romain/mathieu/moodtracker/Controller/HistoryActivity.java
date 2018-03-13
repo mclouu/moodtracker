@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.romain.mathieu.moodtracker.Model.SharedPreferencesUtils;
 import com.romain.mathieu.moodtracker.R;
@@ -22,7 +23,12 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
 
 
-        SharedPreferencesUtils.getArrayList(this);
+        if (SharedPreferencesUtils.containsArrayList(this)){
+            SharedPreferencesUtils.getArrayList(this);
+        }else{
+            Toast.makeText(this, "Vous n'avez pas encore d'historique :(", Toast.LENGTH_LONG).show();
+        }
+
 
 
         recyclerView = findViewById(R.id.recyclerView);
