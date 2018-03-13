@@ -58,11 +58,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnHistory = findViewById(R.id.btn_history);
 // findViewById ------------------------------------------------------------
 
+        if (SharedPreferencesUtils.containsMood(this)) {
+            mood = SharedPreferencesUtils.getMood(this);
+        } else {
+            mood = 3;
+        }
+
+        initializeData();
+
         btnAddMessage.setOnClickListener(this);
         btnHistory.setOnClickListener(this);
 
+        SharedPreferencesUtils.saveMood(MainActivity.this, mood);
+
         swipe();
-        initializeData();
+
         AlarmMidnight(this);
     }
 
@@ -157,11 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferencesUtils.saveWidth(MainActivity.this, myMetrics);
 
 
-        if (SharedPreferencesUtils.containsMood(this)) {
-            mood = SharedPreferencesUtils.getMood(this);
-        } else {
-            mood = 3;
-        }
+
     }
 
     //This method executes the code in MyBroadcastReceiver at midnight
